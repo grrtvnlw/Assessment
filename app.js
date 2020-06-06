@@ -25,7 +25,7 @@ const db = pgp(config);
 app.get('/Invoice', (req, res) => {
   db.query("SELECT * FROM invoice WHERE status = 'pending' ORDER BY id ASC")
   .then((results) => {
-    console.log(results)
+    // console.log(results)
     res.render('index', {
       title: 'Assessment',
       results: results
