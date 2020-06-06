@@ -49,19 +49,19 @@ app.post('/Invoice', (req, res) => {
 
 app.put('/Invoice/:id', (req, res) => {
   db.result("UPDATE invoice SET status = 'Approved' WHERE invoice_number = ${id} RETURNING *", req.params)
-  // db.query("SELECT * FROM invoice WHERE status = 'pending' ORDER BY id ASC")
-  // .then((results) => {
-  //   console.log(results)
-  //   res.render('index', {
-  //     title: 'Assessment',
-  //     results: results
-  //   })
-  // })
-  // .catch((e) => {
-  //   res.status(500).json({
-  //     error: 'Database Error',
-  //   });
-  // });
+  db.query("SELECT * FROM invoice WHERE status = 'pending' ORDER BY id ASC")
+  .then((results) => {
+    console.log(results)
+    res.render('index', {
+      title: 'Assessment',
+      results: results
+    })
+  })
+  .catch((e) => {
+    res.status(500).json({
+      error: 'Database Error',
+    });
+  });
 });
 
 app.listen(PORT, () => console.log(`Running: http://localhost:${PORT}`));
