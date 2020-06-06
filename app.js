@@ -11,6 +11,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
+app.use(express.static('public'));
+
 const config = {
   host: 'localhost',
   port: '5432',
@@ -27,12 +29,6 @@ app.get('/Invoice', (req, res) => {
     res.render('index', {
       title: 'Assessment',
       results: results
-      // invoice_number: results[0].invoice_number,
-      // vendor_name: results.vendor_name,
-      // vendor_address: results.remittance_address,
-      // invoice_total: results.total,
-      // invoice_date: results.invoice_date,
-      // due_date: results.due_date
     });
   });
 }); 
@@ -49,6 +45,23 @@ app.post('/Invoice', (req, res) => {
       error: 'Database Error',
     });
   });
+});
+
+app.put('/Invoice/:id', (req, res) => {
+  db.result("UPDATE invoice SET status = 'Approved' WHERE invoice_number = ${id} RETURNING *", req.params)
+  // db.query("SELECT * FROM invoice WHERE status = 'pending' ORDER BY id ASC")
+  // .then((results) => {
+  //   console.log(results)
+  //   res.render('index', {
+  //     title: 'Assessment',
+  //     results: results
+  //   })
+  // })
+  // .catch((e) => {
+  //   res.status(500).json({
+  //     error: 'Database Error',
+  //   });
+  // });
 });
 
 app.listen(PORT, () => console.log(`Running: http://localhost:${PORT}`));
