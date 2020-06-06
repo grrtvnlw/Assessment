@@ -21,9 +21,19 @@ const config = {
 const db = pgp(config);
 
 app.get('/Invoice', (req, res) => {
-  db.query('SELECT * FROM invoice ORDER BY id ASC')
+  db.query("SELECT * FROM invoice WHERE status = 'pending' ORDER BY id ASC")
   .then((results) => {
-    res.json(results);
+    console.log(results)
+    res.render('index', {
+      title: 'Assessment',
+      results: results
+      // invoice_number: results[0].invoice_number,
+      // vendor_name: results.vendor_name,
+      // vendor_address: results.remittance_address,
+      // invoice_total: results.total,
+      // invoice_date: results.invoice_date,
+      // due_date: results.due_date
+    });
   });
 }); 
 

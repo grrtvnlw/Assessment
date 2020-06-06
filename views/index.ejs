@@ -1,3 +1,14 @@
 <%- include('partials/head') %>
 
+<ul>
+  <% for(var i=0; i < results.length; i++) { %>
+    <li><%= results[i].invoice_number %></li>
+    <li><%= results[i].vendor_name %></li>
+    <li><%= results[i].remittance_address %></li>
+    <li><%= results[i].total %></li>
+    <li><%= results[i].invoice_date %></li>
+    <li><%= results[i].due_date %></li>
+  <% } %>
+</ul>
+
 <%- include('partials/foot') %>
