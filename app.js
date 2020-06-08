@@ -50,11 +50,11 @@ app.post('/Invoice', (req, res) => {
 app.put('/Invoice/:id', (req, res) => {
   db.result("UPDATE invoice SET status = 'Approved' WHERE invoice_number = ${id} RETURNING *", req.params)
   db.query("SELECT * FROM invoice WHERE status = 'pending' ORDER BY id ASC")
-  .then((results) => {
-    console.log(results)
+  .then((result) => {
+    console.log(result)
     res.render('index', {
       title: 'Assessment',
-      results: results
+      results: result
     })
   })
   .catch((e) => {
